@@ -3,9 +3,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   const [form, setForm] = useState({
@@ -20,7 +21,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3001/api/login", {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -31,6 +32,7 @@ const Login = () => {
           title: "Đăng nhập thành công!",
           description: "Chào mừng bạn trở lại.",
         });
+        navigate('/');
         // const { token } = await res.json();
         // localStorage.setItem("token", token);
       } else {
